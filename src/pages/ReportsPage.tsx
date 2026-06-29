@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { getDailyReport } from '../api/expenseApi'
+import { fmt } from '../api/format'
 import type { DailyReport } from '../types'
 
 export default function ReportsPage() {
@@ -76,16 +77,16 @@ export default function ReportsPage() {
           <div className="stats-row">
             <div className="stat-card">
               <span className="stat-label">Total Credits</span>
-              <span className="stat-value text-green">₹{totalCredits.toFixed(2)}</span>
+              <span className="stat-value text-green">₹{fmt(totalCredits)}</span>
             </div>
             <div className="stat-card">
               <span className="stat-label">Total Debits</span>
-              <span className="stat-value text-red">₹{totalDebits.toFixed(2)}</span>
+              <span className="stat-value text-red">₹{fmt(totalDebits)}</span>
             </div>
             <div className="stat-card">
               <span className="stat-label">Net Change</span>
               <span className={`stat-value ${netChange >= 0 ? 'text-green' : 'text-red'}`}>
-                ₹{netChange.toFixed(2)}
+                ₹{fmt(netChange)}
               </span>
             </div>
           </div>
@@ -110,10 +111,10 @@ export default function ReportsPage() {
                     {reports.map((r) => (
                       <tr key={r.date}>
                         <td>{r.date}</td>
-                        <td className="num text-green">₹{r.total_credits.toFixed(2)}</td>
-                        <td className="num text-red">₹{r.total_debits.toFixed(2)}</td>
+                        <td className="num text-green">₹{fmt(r.total_credits)}</td>
+                        <td className="num text-red">₹{fmt(r.total_debits)}</td>
                         <td className={`num ${r.net_change >= 0 ? 'text-green' : 'text-red'}`}>
-                          ₹{r.net_change.toFixed(2)}
+                          ₹{fmt(r.net_change)}
                         </td>
                       </tr>
                     ))}

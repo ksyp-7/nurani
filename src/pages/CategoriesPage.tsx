@@ -1,5 +1,6 @@
 import { useState, useEffect, type FormEvent } from 'react'
 import { getCategories, createCategory, updateCategory, deleteCategory } from '../api/expenseApi'
+import { fmt } from '../api/format'
 import type { Category } from '../types'
 
 export default function CategoriesPage() {
@@ -136,7 +137,7 @@ export default function CategoriesPage() {
                   <tr key={cat.category_id}>
                     <td className="cell-name">{cat.category_name}</td>
                     <td className={`num ${Number(cat.amount) >= 0 ? 'text-green' : 'text-red'}`}>
-                      ₹{Number(cat.amount).toFixed(2)}
+                      ₹{fmt(cat.amount)}
                     </td>
                     <td className="actions-col">
                       <button className="btn btn-sm btn-ghost" onClick={() => startEdit(cat)} disabled={submitting}>

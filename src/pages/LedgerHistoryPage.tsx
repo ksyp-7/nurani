@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getCategories, getLedgerWithRunningBalance } from '../api/expenseApi'
+import { fmt } from '../api/format'
 import type { Category, LedgerWithBalance } from '../types'
 
 export default function LedgerHistoryPage() {
@@ -63,7 +64,7 @@ export default function LedgerHistoryPage() {
           <div className="stat-row-inline">
             <span className="stat-label">Current Balance:</span>
             <span className={`stat-value-sm ${Number(selectedCategory.amount) >= 0 ? 'text-green' : 'text-red'}`}>
-              ₹{Number(selectedCategory.amount).toFixed(2)}
+              ₹{fmt(selectedCategory.amount)}
             </span>
           </div>
         )}
@@ -104,9 +105,9 @@ export default function LedgerHistoryPage() {
                         {entry.txn_type}
                       </span>
                     </td>
-                    <td className="num">₹{Number(entry.amount).toFixed(2)}</td>
+                    <td className="num">₹{fmt(entry.amount)}</td>
                     <td className={`num ${entry.running_balance >= 0 ? 'text-green' : 'text-red'}`}>
-                      ₹{entry.running_balance.toFixed(2)}
+                      ₹{fmt(entry.running_balance)}
                     </td>
                     <td>{entry.is_wastage ? 'Yes' : 'No'}</td>
                     <td className="cell-note">{entry.ref_note ?? '—'}</td>

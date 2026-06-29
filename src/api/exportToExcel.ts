@@ -1,5 +1,6 @@
 import { supabase } from '../lib/supabase'
 import * as XLSX from 'xlsx'
+import { fmt } from './format'
 
 export async function exportToExcel() {
   const { data: categories, error: catErr } = await supabase
@@ -24,14 +25,14 @@ export async function exportToExcel() {
 
   const catSheetData = (categories ?? []).map((c: Record<string, unknown>) => ({
     'Category Name': c.category_name,
-    'Balance (₹)': Number(c.amount).toFixed(2),
+    'Balance (₹)': fmt(c.amount),
   }))
 
   const ledSheetData = (ledger ?? []).map((e: Record<string, unknown>) => ({
     Date: e.date,
     Category: catMap.get(e.category_id as number) ?? '',
     Type: e.txn_type,
-    'Amount (₹)': Number(e.amount).toFixed(2),
+    'Amount (₹)': fmt(e.amount),
     Wastage: e.is_wastage ? 'Yes' : 'No',
     'Reference Note': e.ref_note ?? '',
     'Created At': e.created_at,

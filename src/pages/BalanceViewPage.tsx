@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getCategories } from '../api/expenseApi'
+import { fmt } from '../api/format'
 import type { Category } from '../types'
 
 export default function BalanceViewPage() {
@@ -55,7 +56,7 @@ export default function BalanceViewPage() {
         <div className="stat-card">
           <span className="stat-label">Total Balance</span>
           <span className={`stat-value ${totalBalance >= 0 ? 'text-green' : 'text-red'}`}>
-            ₹{totalBalance.toFixed(2)}
+            ₹{fmt(totalBalance)}
           </span>
         </div>
       </div>
@@ -89,7 +90,7 @@ export default function BalanceViewPage() {
                   <tr key={cat.category_id}>
                     <td className="cell-name">{cat.category_name}</td>
                     <td className={`num ${Number(cat.amount) >= 0 ? 'text-green' : 'text-red'}`}>
-                      ₹{Number(cat.amount).toFixed(2)}
+                      ₹{fmt(cat.amount)}
                     </td>
                   </tr>
                 ))}
