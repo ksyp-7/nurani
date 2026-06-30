@@ -47,3 +47,17 @@ FOR EACH ROW EXECUTE FUNCTION prevent_ledger_update_delete();
 CREATE TRIGGER trg_prevent_delete
 BEFORE DELETE ON category_ledger
 FOR EACH ROW EXECUTE FUNCTION prevent_ledger_update_delete();
+
+CREATE TABLE sales_master (
+  id    SERIAL PRIMARY KEY,
+  date  DATE NOT NULL DEFAULT CURRENT_DATE,
+  sales NUMERIC(12,2) NOT NULL CHECK (sales >= 0)
+);
+
+CREATE INDEX idx_sales_date ON sales_master(date);
+
+CREATE TABLE fixed_expenses (
+  id            SERIAL PRIMARY KEY,
+  expense_name  VARCHAR(200) NOT NULL,
+  amount        NUMERIC(12,2) NOT NULL CHECK (amount > 0)
+);

@@ -3,10 +3,18 @@ import { getDailyReport } from '../api/expenseApi'
 import { fmt } from '../api/format'
 import type { DailyReport } from '../types'
 
+function startOfMonth() {
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-01`
+}
+
+function todayStr() {
+  return new Date().toISOString().split('T')[0]
+}
+
 export default function ReportsPage() {
-  const today = new Date().toISOString().split('T')[0]
-  const [startDate, setStartDate] = useState(today)
-  const [endDate, setEndDate] = useState(today)
+  const [startDate, setStartDate] = useState(startOfMonth)
+  const [endDate, setEndDate] = useState(todayStr)
   const [reports, setReports] = useState<DailyReport[]>([])
   const [loaded, setLoaded] = useState(false)
   const [loading, setLoading] = useState(false)
